@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  php:
+    build: ./
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/var/www
+      - logs:/var/www/storage/logs
+
+  mysql:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ibm_test
+      MYSQL_USER: ibm_test
+      MYSQL_PASSWORD: ibm_test
+    volumes:
+      - database:/var/lib/mysql
+
+volumes:
+  logs:
+    driver: local
+  database:
